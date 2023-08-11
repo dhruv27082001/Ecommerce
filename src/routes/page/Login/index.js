@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../redux/action';
 import { useNavigate } from 'react-router-dom';
+import NotiStackComponent from '../../../components/NotiStackComponent';
 
 function Copyright() {
   return (
@@ -34,6 +35,7 @@ const defaultTheme = createTheme();
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const notiComponent = NotiStackComponent();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -49,14 +51,10 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      await dispatch(loginUser(formData));
+     dispatch(loginUser(formData));
       navigate('/');
-    } catch (error) {
-      // Handle login error here
-      console.error('Login error:', error);
-    }
-  };
+      notiComponent.showSnackbar('Login successfully!', 'success');
+    };
 
   return (
     <ThemeProvider theme={defaultTheme}>

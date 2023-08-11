@@ -1,14 +1,20 @@
 import { LOGIN_SUCCESS, LOGIN_FAILD } from "./constant";
+import axiosUtil from "../../config/index";
 import axios from "axios";
+
+axiosUtil.initialize();
 
 export const loginUser = (data) => {
     return (dispatch) => {
-        return axios.post("'https://fakestoreapi.com/auth/login", {
+        return axios.post("auth/login", {
             username: data.username,
             password: data.password
         })
             .then((response) => {
                 if (response.status === 200) {
+                    const token = response.data.token;
+                    localStorage.setItem("token", token);
+
                     dispatch({
                         type: LOGIN_SUCCESS,
                         payload: response.data,
@@ -19,9 +25,9 @@ export const loginUser = (data) => {
             .catch((err) => {
                 dispatch({
                     type: LOGIN_FAILD,
-                    payload: err.response.data, // You can customize this payload
+                    payload: err.response.data,
                 });
-                throw err; // Rethrow the error to maintain the chain of promises
+                throw err;
             });
-    }
+    };
 };

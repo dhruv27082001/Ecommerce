@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+import HeaderComponent from '../../../components/HeaderComponent';
 
 const Dashboard = () => {
   return (
-    <div>
-      Dashboard
-    </div>
+    <>
+      <HeaderComponent title="ABc"/>
+    </>
   )
 }
 

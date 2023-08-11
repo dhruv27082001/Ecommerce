@@ -10,7 +10,7 @@ const axiosUtil = {
         return axiosConfig;
       },
       (error) => {
-        return Promise.reject(error); // Ensure you return the rejected promise
+        return Promise.reject(error); 
       },
     );
 
@@ -19,7 +19,7 @@ const axiosUtil = {
         return response;
       },
       (error) => {
-        return Promise.reject(error); // Ensure you return the rejected promise
+        return Promise.reject(error); 
       },
     );
   },
