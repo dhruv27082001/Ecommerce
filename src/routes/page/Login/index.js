@@ -12,10 +12,12 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../redux/action';
 import { useNavigate } from 'react-router-dom';
 import NotiStackComponent from '../../../components/NotiStackComponent';
+import InputComponent from '../../../components/InputComponent';
+import ButtonComponent from '../../../components/ButtonComponent';
 
 function Copyright() {
   return (
@@ -36,25 +38,63 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const notiComponent = NotiStackComponent();
+  const user = useSelector(state => state.product.user);
+  
+  
   const [formData, setFormData] = useState({
     username: '',
     password: '',
+    rememberMe: false,
   });
+  
+  const [errors, setErrors] = useState({
+    username: '',
+    password: '',
+  })
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value, type, checked } = event.target;
+    const inputValue = type === 'checkbox' ? checked : value;
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: inputValue,
     }));
+
+    // Clear previous errors when user starts typing
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: '',
+    }));
+  };
+
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {};
+
+    if (!formData.username.trim()) {
+      newErrors.username = 'Username is required';
+      valid = false;
+    }
+
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-     dispatch(loginUser(formData));
+
+    if (validateForm()) {
+      dispatch(loginUser(formData));
       navigate('/');
-      notiComponent.showSnackbar('Login successfully!', 'success');
-    };
+      notiComponent.showSnackbar(`Welcome ${user?.username}!`, 'success');
+    }
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -91,7 +131,7 @@ export default function Login() {
               Sign in
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField
+              <InputComponent
                 margin="normal"
                 required
                 fullWidth
@@ -102,8 +142,10 @@ export default function Login() {
                 autoFocus
                 value={formData.username}
                 onChange={handleInputChange}
+                helperText={errors.username}
+                error={errors.username}
               />
-              <TextField
+              <InputComponent
                 margin="normal"
                 required
                 fullWidth
@@ -114,28 +156,30 @@ export default function Login() {
                 autoComplete="current-password"
                 value={formData.password}
                 onChange={handleInputChange}
+                error={errors.password} 
+                helperText={errors.password}
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox
+                  name="rememberMe"
+                  value={formData.rememberMe}
+                  color="primary"
+                  onChange={handleInputChange}
+                />}
                 label="Remember me"
               />
-              <Button
+              <ButtonComponent 
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
                 Sign In
-              </Button>
+              </ButtonComponent>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
                     Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>

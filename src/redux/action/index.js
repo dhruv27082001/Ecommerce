@@ -14,10 +14,16 @@ export const loginUser = (data) => {
                 if (response.status === 200) {
                     const token = response.data.token;
                     localStorage.setItem("token", token);
+                    
+                    const userData = {
+                        username: data.username,
+                        password: data.password,
+                        token: token,
+                    };
 
                     dispatch({
                         type: LOGIN_SUCCESS,
-                        payload: response.data,
+                        payload: userData,
                     });
                     return response;
                 }

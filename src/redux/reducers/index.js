@@ -1,7 +1,7 @@
 import { LOGIN_SUCCESS } from "../action/constant";
 
 const initialState = {
-  user: [],
+  user: null,
   isLoggedIn: false,
 };
 
