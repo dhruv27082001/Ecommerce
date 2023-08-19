@@ -1,10 +1,13 @@
 import { LOGIN_SUCCESS, LOGIN_FAILD } from "./constant";
 import axiosUtil from "../../config/index";
 import axios from "axios";
+import NotiStackComponent from "../../components/NotiStackComponent";
 
 axiosUtil.initialize();
 
 export const loginUser = (data) => {
+    const notiComponent = NotiStackComponent();
+
     return (dispatch) => {
         return axios.post("auth/login", {
             username: data.username,
@@ -29,11 +32,8 @@ export const loginUser = (data) => {
                 }
             })
             .catch((err) => {
-                dispatch({
-                    type: LOGIN_FAILD,
-                    payload: err.response.data,
-                });
-                throw err;
+                notiComponent.showSnackbar("Invalid username or password123", "error");
+
             });
     };
 };
