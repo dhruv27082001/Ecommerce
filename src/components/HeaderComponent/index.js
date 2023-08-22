@@ -1,4 +1,4 @@
-import  React from 'react';
+import React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -10,45 +10,53 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate } from 'react-router-dom';
 
+export const MainListItems = () => {
+  const navigate = useNavigate();
 
+  const handleCustomers = () => {
+    navigate("/customers-list");
+  };
 
-export const mainListItems = (
-  <React.Fragment>
-    <ListItemButton>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Products" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Deleted Products" />
-    </ListItemButton>
-  </React.Fragment>
-);
+  return (
+    <React.Fragment>
+      <ListItemButton>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <BarChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Products" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Orders" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Customers" onClick={handleCustomers} />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Deleted Products" />
+      </ListItemButton>
+    </React.Fragment>
+  );
+};
 
-export const secondaryListItems = (
+export const SecondaryListItems = () => {
+return (
   <React.Fragment>
     <ListSubheader component="div" inset>
       Saved reports
@@ -72,10 +80,9 @@ export const secondaryListItems = (
       <ListItemText primary="Year-end sale" />
     </ListItemButton>
   </React.Fragment>
-);
+)};
 
-
-const LogoutList = ({ onClick,primary }) => (
+export const LogoutList = ({ onClick, primary }) => (
   <React.Fragment>
     <ListItemButton onClick={onClick}>
       <ListItemIcon>
@@ -85,5 +92,3 @@ const LogoutList = ({ onClick,primary }) => (
     </ListItemButton>
   </React.Fragment>
 );
-
-export default LogoutList;

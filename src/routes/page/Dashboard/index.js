@@ -16,14 +16,13 @@ import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import LogoutList, {
-  mainListItems,
-  secondaryListItems,
-} from "../../../components/HeaderComponent";
+import {LogoutList,  MainListItems,SecondaryListItems} from "../../../components/HeaderComponent";
 import { useNavigate } from "react-router-dom";
 import Copyright from "../../../components/Copyright";
 import { useSelector } from "react-redux";
 import Orders from "../../../components/Orders";
+import Chart from "../../../components/Chart";
+import Deposits from "../../../components/Deposits";
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -153,9 +152,9 @@ export default function Dashboard() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+            <MainListItems />
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            <SecondaryListItems />
             <Divider sx={{ my: 5 }} />
             <LogoutList onClick={logoutHandler} primary="Logout" />
           </List>
@@ -185,7 +184,7 @@ export default function Dashboard() {
                     height: 240,
                   }}
                 >
-                  {/* <Chart /> */}
+                  <Chart />
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
@@ -198,7 +197,7 @@ export default function Dashboard() {
                     height: 240,
                   }}
                 >
-                  {/* <Deposits /> */}
+                  <Deposits />
                 </Paper>
               </Grid>
               {/* Recent Orders */}

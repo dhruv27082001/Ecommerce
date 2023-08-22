@@ -4,6 +4,7 @@ import Protected from '../components/Protected';
 import Login from './page/Login';
 import Error404 from './page/Error404';
 import Dashboard from './page/Dashboard';
+import Customers from './page/Customers';
 
 const RoutesPage = () => {
   return (
@@ -11,6 +12,7 @@ const RoutesPage = () => {
       <Routes>
         <Route path="/signin" element={<Protected component={Login} />} />
         <Route path="/" element={<Protected component={Dashboard} />} />
+        <Route path="/cutsmore-list" element={<Protected component={Customers} />} />
         <Route path="*" element={<Error404 />} />
 
       </Routes>
