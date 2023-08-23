@@ -80,7 +80,6 @@ export default function Dashboard() {
   };
 
   const user = useSelector((state) => state?.product?.user);
-  console.log("user:", user);
 
   const logoutHandler = () => {
     localStorage.removeItem("token");

@@ -12,7 +12,7 @@ const GoogleAuthComponent = (props) => {
   const navigate = useNavigate();
   const notiComponent = NotiStackComponent();
 
-  const clientId = "244753173236-04629oab5bl4t2gaao6gbe2ks2epi1ia.apps.googleusercontent.com";
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID_LOCAL;
 
     gapi.load('client:auth2', () => {
       gapi.auth2.init({ clientId: clientId });

@@ -12,7 +12,7 @@ const RoutesPage = () => {
       <Routes>
         <Route path="/signin" element={<Protected component={Login} />} />
         <Route path="/" element={<Protected component={Dashboard} />} />
-        <Route path="/cutsmore-list" element={<Protected component={Customers} />} />
+        <Route path="/cutsmoreList" element={<Protected component={Customers} />} />
         <Route path="*" element={<Error404 />} />
 
       </Routes>

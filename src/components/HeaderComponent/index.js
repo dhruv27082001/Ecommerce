@@ -16,7 +16,7 @@ export const MainListItems = () => {
   const navigate = useNavigate();
 
   const handleCustomers = () => {
-    navigate("/customers-list");
+    navigate("/cutsmoreList");
   };
 
   return (
