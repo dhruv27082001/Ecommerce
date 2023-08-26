@@ -1,8 +1,8 @@
-import { LOGIN_SUCCESS, USER_SUCCESS } from "../action/constant";
+import { LOGIN_SUCCESS, SET_USER } from "../action/constant";
 
 const initialState = {
   user: [],
-  customer:[],
+  customer: [],
   isLoggedIn: false,
 };
 
@@ -11,13 +11,13 @@ const productReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        user: action?.payload,
         isLoggedIn: true,
       };
-      case USER_SUCCESS:
+      case SET_USER:
       return {
         ...state,
-        customer: action.payload,
+        customer: action?.payload,
       }
       
     default:

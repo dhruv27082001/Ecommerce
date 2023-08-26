@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_FAILD, USER_SUCCESS, USER_FAILED } from "./constant";
+import { LOGIN_SUCCESS, USER_SUCCESS, USER_FAILED, SET_USER, SET_USER_FAILED } from "./constant";
 import axiosUtil from "../../config/index";
 import axios from "axios";
 import NotiStackComponent from "../../components/NotiStackComponent";
@@ -34,29 +34,29 @@ export const loginUser = (data) => {
             })
             .catch((err) => {
                 notiComponent.showSnackbar("Invalid username or password", "error");
-                throw err;  // Rethrow the error to be caught by the caller
+                throw err;  
             });
     };
 };
 
-export const userList = () => {
+
+export const customerList = () => {
     const notiComponent = NotiStackComponent();
 
     return (dispatch) => {
         return axios.get('/users')
             .then((response) => {
                 dispatch({
-                    type: USER_SUCCESS,  
-                    payload: response?.data,
-                   
+                    type: SET_USER,  
+                    payload: response?.data,  
                 });
-                 console.log("payload:",response?.data)
             })
             .catch((error) => {
                 dispatch({
-                    type: USER_FAILED,  
+                    type: SET_USER_FAILED,  
                     error: error.message,
                 });
+                console.log("error",error);
                 notiComponent.showSnackbar(`${error}`, "error");
             });
     };

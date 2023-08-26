@@ -48,7 +48,7 @@ const TableComponent = (props) => {
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <TableHead>
-              <TableRow sx={{margin:1}}>
+              <TableRow sx={{margin:5}}>
                 {headCells.map((headCell) => (
                   <TableCell
                     key={headCell.id}
