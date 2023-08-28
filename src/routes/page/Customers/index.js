@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, Menu, MenuItem } from "@mui/material";
+import { Box, Button, Menu, MenuItem, styled } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import TableComponent from "../../../components/TableComponent";
 import ButtonComponent from "../../../components/ButtonComponent";
@@ -9,6 +9,14 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CustomModal from "../../../components/CustomModal";
+
+const StyledButton = styled(Box)({
+  display: "flex",
+  justifyContent: "flex-end",
+  marginBottom: "20px",
+  marginTop: "20px",
+  marginRight: "10px",
+});
 
 const Customers = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -90,7 +98,7 @@ const Customers = () => {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={handleView}>
+            <MenuItem onClick={() => handleView(row?.id)}>
               <VisibilityIcon /> View
             </MenuItem>
             <MenuItem onClick={handleClose}>
@@ -106,15 +114,17 @@ const Customers = () => {
   ];
 
   const customer = useSelector((state) => state?.product?.customer);
-  console.log("username", customer.username);
+  console.log("username", customer);
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const handleCloseModal = () => {
     setOpenModal(false);
   };
 
-  const handleView = () => {
+  const handleView = (id) => {
+    setSelectedUser(id);
     setOpenModal(true);
   };
 
@@ -128,6 +138,15 @@ const Customers = () => {
 
   return (
     <>
+      <StyledButton>
+        <ButtonComponent
+          style={{
+            background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+          }}
+          title="+ Create"
+          // onClick={handleAddTodo}
+        />
+      </StyledButton>
       <CustomModal open={openModal} onClose={handleCloseModal} title="View">
         <div style={{ width: "100%" }}>
           <Box
@@ -139,7 +158,9 @@ const Customers = () => {
               fontWeight: "700",
             }}
           >
-            <InputLabel>{`Username: ${customer?.username}`}</InputLabel>
+            <InputLabel>{`Username: ${selectedUser?.username}`}</InputLabel>
+            <InputLabel>{`Name: ${selectedUser?.name?.firstname} ${selectedUser?.name?.lastname}`}</InputLabel>
+            <InputLabel>{`Password: ${selectedUser?.password}`}</InputLabel>
           </Box>
           <Box
             sx={{
