@@ -9,6 +9,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CustomModal from "../../../components/CustomModal";
+import InputComponent from "../../../components/InputComponent";
 
 const StyledButton = styled(Box)({
   display: "flex",
@@ -98,7 +99,7 @@ const Customers = () => {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={() => handleView(row?.id)}>
+            <MenuItem onClick={() => handleView(row)}>
               <VisibilityIcon /> View
             </MenuItem>
             <MenuItem onClick={handleClose}>
@@ -117,6 +118,7 @@ const Customers = () => {
   console.log("username", customer);
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
+  const [openUser,setOpenUser] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
   const handleCloseModal = () => {
@@ -135,6 +137,12 @@ const Customers = () => {
   useEffect(() => {
     dispatch(customerList());
   }, [dispatch]);
+  
+  const handleAddUser = () => {
+    setOpenUser(true);
+    console.log("openUser:", openUser); 
+  };
+  
 
   return (
     <>
@@ -143,8 +151,8 @@ const Customers = () => {
           style={{
             background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
           }}
-          title="+ Create"
-          // onClick={handleAddTodo}
+          title="+ Add User"
+          onClick={handleAddUser}
         />
       </StyledButton>
       <CustomModal open={openModal} onClose={handleCloseModal} title="View">
@@ -162,18 +170,10 @@ const Customers = () => {
             <InputLabel>{`Name: ${selectedUser?.name?.firstname} ${selectedUser?.name?.lastname}`}</InputLabel>
             <InputLabel>{`Password: ${selectedUser?.password}`}</InputLabel>
           </Box>
-          <Box
-            sx={{
-              display: "none",
-              displayPrint: "block",
-              m: 1,
-              fontSize: "0.875rem",
-              fontWeight: "700",
-            }}
-          >
-            Print Only (Hide on screen only)
-          </Box>
         </div>
+      </CustomModal>
+      <CustomModal open={openUser} onClose={() => setOpenUser(false)} title="Add User">     
+        <InputComponent label="Email"></InputComponent>
       </CustomModal>
       <TableComponent headCells={headCells} row={customer} />
     </>

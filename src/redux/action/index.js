@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, USER_SUCCESS, USER_FAILED, SET_USER, SET_USER_FAILED } from "./constant";
+import { LOGIN_SUCCESS, USER_SUCCESS, USER_FAILED, SET_USER, SET_USER_FAILED, ADD_USER_SUCCESS, ADD_USER_FAILED } from "./constant";
 import axiosUtil from "../../config/index";
 import axios from "axios";
 import NotiStackComponent from "../../components/NotiStackComponent";
@@ -60,4 +60,35 @@ export const customerList = () => {
                 notiComponent.showSnackbar(`${error}`, "error");
             });
     };
+};
+
+export const aadUser = () => {
+    const notiComponent = NotiStackComponent();
+    
+    return (dispatch) => {
+        return axios.post('/users')
+            .then((response) => {
+                dispatch({
+                    type: ADD_USER_SUCCESS,
+                    payload: response?.data,
+                });
+            })
+            .catch((error) => {
+                dispatch({
+                    type: ADD_USER_FAILED,
+                    error: error.message,
+                });
+                console.log("Error:",error);
+                notiComponent.showSnackbar(`${error}`,"error");
+            });
+    }
+
+};
+
+export const editUser = () => {
+
+};
+
+export const deleteUser = () => {
+
 };
