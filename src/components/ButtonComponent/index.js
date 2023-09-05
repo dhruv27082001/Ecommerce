@@ -2,7 +2,7 @@ import { Button } from '@mui/material'
 import React from 'react'
 
 const ButtonComponent = (props) => {
-    const { title, type, fullWidth, variant, sx,style } = props;
+    const { title, type, fullWidth, variant, sx,style,onClick } = props;
     return (
         <Button
             type={type}
@@ -10,6 +10,7 @@ const ButtonComponent = (props) => {
             variant={variant}
             sx={sx}
             style={style}
+            onClick={onClick}
         >{title}
         </Button>
     )

@@ -10,6 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CustomModal from "../../../components/CustomModal";
 import InputComponent from "../../../components/InputComponent";
+import { useNavigate } from "react-router-dom";
 
 const StyledButton = styled(Box)({
   display: "flex",
@@ -102,7 +103,7 @@ const Customers = () => {
             <MenuItem onClick={() => handleView(row)}>
               <VisibilityIcon /> View
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => handleEdit(row)}>
               <EditIcon /> Edit
             </MenuItem>
             <MenuItem onClick={handleClose}>
@@ -117,6 +118,7 @@ const Customers = () => {
   const customer = useSelector((state) => state?.product?.customer);
   console.log("username", customer);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [openUser,setOpenUser] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -139,21 +141,27 @@ const Customers = () => {
   }, [dispatch]);
   
   const handleAddUser = () => {
-    setOpenUser(true);
-    console.log("openUser:", openUser); 
-  };
+    // Navigate to the add user page
+    navigate("/customerList-Add");  };
+  
+    const handleEdit = (user) => {
+      setSelectedUser(user);
+      // Navigate to the edit page with the selected user's data
+      navigate(`/customerList-Edit/${user.id}`);
+    };
+    
   
 
   return (
     <>
       <StyledButton>
-        <ButtonComponent
-          style={{
-            background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-          }}
-          title="+ Add User"
-          onClick={handleAddUser}
-        />
+      <ButtonComponent
+    style={{
+      background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    }}
+    title="+ Add User"
+    onClick={handleAddUser}
+  />
       </StyledButton>
       <CustomModal open={openModal} onClose={handleCloseModal} title="View">
         <div style={{ width: "100%" }}>
@@ -171,9 +179,6 @@ const Customers = () => {
             <InputLabel>{`Password: ${selectedUser?.password}`}</InputLabel>
           </Box>
         </div>
-      </CustomModal>
-      <CustomModal open={openUser} onClose={() => setOpenUser(false)} title="Add User">     
-        <InputComponent label="Email"></InputComponent>
       </CustomModal>
       <TableComponent headCells={headCells} row={customer} />
     </>
